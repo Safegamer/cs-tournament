@@ -4,8 +4,8 @@ from discord import app_commands
 import json
 import os
 
-# 🔑 FAKE TOKEN (for reference only)
-TOKEN = "MTUwNjMwOTg3OTU4NDAwMjEyOA.GDHP5g.JjJme2LZR5eL3Is-lFgaGSz8CWs0sw3OjWGFlc"
+# 🔐 SAFE TOKEN (from environment)
+TOKEN = os.getenv("TOKEN")
 
 # 📢 YOUR CHANNEL ID
 CHANNEL_ID = 1506327211148578886
@@ -32,7 +32,7 @@ def save(data):
 data = load()
 
 # =====================
-# FIXED MESSAGE ID LOAD
+# MESSAGE ID HANDLING (FIXED)
 # =====================
 def load_msg():
     if not os.path.exists(MSG_FILE):
@@ -49,7 +49,7 @@ def save_msg(mid):
         f.write(str(mid))
 
 # =====================
-# EMBED
+# EMBED LEADERBOARD
 # =====================
 def create_embed():
     teams = data["teams"]
@@ -70,7 +70,8 @@ def create_embed():
         return embed
 
     for i, (team, d) in enumerate(sorted_teams, 1):
-        medal = "🥇" if i==1 else "🥈" if i==2 else "🥉" if i==3 else f"{i}."
+        medal = "🥇" if i == 1 else "🥈" if i == 2 else "🥉" if i == 3 else f"{i}."
+
         embed.add_field(
             name=f"{medal} {team}",
             value=f"Pts:{d['P']} | W:{d['W']} L:{d['L']} M:{d['M']}",
@@ -80,7 +81,7 @@ def create_embed():
     return embed
 
 # =====================
-# UPDATE BOARD
+# UPDATE LEADERBOARD
 # =====================
 async def update_board():
     channel = bot.get_channel(CHANNEL_ID)
@@ -159,6 +160,7 @@ async def result(
     else:
         return await interaction.response.send_message("❌ Invalid winner")
 
+    # Save match history
     data["matches"].append({
         "team1": team1,
         "team2": team2,
