@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CS Tournament</title>
+
+<style>
+body {
+    background: #0f172a;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+}
+
+h1 { color: #22c55e; }
+
+.card {
+    background: #1e293b;
+    padding: 20px;
+    margin: 20px auto;
+    width: 60%;
+    border-radius: 10px;
+}
+
+table { width: 100%; }
+
+th, td { padding: 10px; }
+
+.gold { color: gold; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<h1>🏆 CS Tournament Dashboard</h1>
+
+<div class="card">
+<h2>Leaderboard</h2>
+
+<table>
+<tr><th>Rank</th><th>Team</th><th>Pts</th><th>Wins</th></tr>
+
+{% for team, d in teams %}
+<tr class="{% if loop.index == 1 %}gold{% endif %}">
+<td>{{ loop.index }}</td>
+<td>{{ team }}</td>
+<td>{{ d.P }}</td>
+<td>{{ d.W }}</td>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+</body>
+</html>
