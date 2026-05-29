@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Team</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+/* CARD */
+.card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    padding:40px;
+    border-radius:20px;
+    width:420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+    from {transform:scale(0.9); opacity:0;}
+    to {transform:scale(1);}
+}
+
+h2 {
+    margin-bottom:20px;
+}
+
+/* INPUT ROW */
+.input-row {
+    display:flex;
+    align-items:center;
+    margin:10px 0;
+}
+
+/* LABEL */
+.label {
+    width:50px;
+    font-weight:bold;
+    color:#94a3b8;
+}
+
+/* INPUT */
+input {
+    flex:1;
+    padding:14px;
+    border-radius:12px;
+    border:none;
+    background:#020617;
+    color:white;
+    font-size:16px;
+    transition:0.3s;
+}
+
+input:hover {
+    transform: translateY(-2px);
+}
+
+input:focus {
+    outline:none;
+    box-shadow: 0 0 15px rgba(59,130,246,0.9);
+}
+
+/* BUTTON */
+button {
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    color:white;
+    cursor:pointer;
+    background: linear-gradient(120deg, #3b82f6, #2563eb);
+    transition:0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(59,130,246,0.8);
+}
+
+/* BACK */
+.back {
+    display:block;
+    margin-top:15px;
+    text-align:center;
+    color:#94a3b8;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>Edit {{ team }}</h2>
+
+<form method="POST">
+
+<div class="input-row">
+<span class="label">M</span>
+<input name="M" type="number" value="{{ data.M or 0 }}">
+</div>
+
+<div class="input-row">
+<span class="label">W</span>
+<input name="W" type="number" value="{{ data.W or 0 }}">
+</div>
+
+<div class="input-row">
+<span class="label">L</span>
+<input name="L" type="number" value="{{ data.L or 0 }}">
+</div>
+
+<div class="input-row">
+<span class="label">D</span>
+<input name="D" type="number" value="{{ data.D or 0 }}">
+</div>
+
+<div class="input-row">
+<span class="label">RD</span>
+<input name="RD" type="number" value="{{ data.RD or 0 }}">
+</div>
+
+<button>Save Changes</button>
+
+</form>
+
+<a href="/admin" class="back">← Back to Admin</a>
+
+</div>
+
+</body>
+</html>
