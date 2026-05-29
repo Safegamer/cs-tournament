@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    padding:40px;
+    border-radius:16px;
+    width:300px;
+    animation: fade 0.6s ease;
+}
+
+@keyframes fade {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1;}
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    background:#020617;
+    color:white;
+}
+
+button {
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover {
+    box-shadow:0 0 15px rgba(59,130,246,0.7);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Admin Login</h2>
+
+<form method="POST">
+<input name="username" placeholder="Username">
+<input name="password" type="password" placeholder="Password">
+<button>Login</button>
+</form>
+
+</div>
+
+</body>
+</html>
