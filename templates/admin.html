@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Segoe UI';
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    color:white;
+    display:flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width:250px;
+    height:100vh;
+    background:#020617;
+    padding:30px 20px;
+}
+
+.sidebar a {
+    display:block;
+    padding:14px;
+    margin:12px 0;
+    border-radius:12px;
+    text-decoration:none;
+    color:#cbd5f5;
+    transition:0.3s;
+}
+
+.sidebar a:hover {
+    transform: translateX(8px);
+    background: rgba(59,130,246,0.25);
+}
+
+.active {
+    background: rgba(59,130,246,0.3);
+    box-shadow: 0 0 15px rgba(59,130,246,0.4);
+}
+
+/* MAIN */
+.main {
+    flex:1;
+    padding:40px;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.04);
+    padding:25px;
+    border-radius:18px;
+    margin-bottom:25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition:0.3s;
+    animation: fadeUp 0.6s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(59,130,246,0.25);
+}
+
+/* TITLE */
+h2 {
+    margin-bottom:15px;
+    transition:0.3s;
+}
+
+h2:hover {
+    color:#60a5fa;
+    text-shadow: 0 0 10px rgba(96,165,250,0.6);
+}
+
+/* INPUT */
+input {
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    background:#020617;
+    color:white;
+    outline:none;
+    margin-right:10px;
+    transition:0.3s;
+}
+
+input:focus {
+    box-shadow: 0 0 10px rgba(59,130,246,0.6);
+}
+
+/* BUTTON */
+button {
+    padding:10px 16px;
+    border:none;
+    border-radius:10px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59,130,246,0.5);
+}
+
+.delete {
+    background:#ef4444;
+}
+
+/* TABLE */
+table {
+    width:100%;
+    border-spacing:0 14px;
+}
+
+th {
+    text-align:left;
+    color:#94a3b8;
+    padding:10px;
+}
+
+/* ROW */
+tr {
+    background: rgba(255,255,255,0.03);
+    opacity:0;
+    transform: translateY(50px);
+    animation: rowEnter 0.7s ease forwards;
+    transition:0.25s;
+}
+
+td {
+    padding:16px;
+}
+
+/* ROW HOVER */
+tr:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(59,130,246,0.15);
+    box-shadow: 0 10px 25px rgba(59,130,246,0.25);
+}
+
+/* ACTIONS */
+.actions {
+    display:flex;
+    gap:10px;
+}
+
+/* ANIMATIONS */
+@keyframes rowEnter {
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <a href="/">🏆 Leaderboard</a>
+    <a href="/admin" class="active">⚙ Admin Panel</a>
+</div>
+
+<div class="main">
+
+<!-- ADD TEAM -->
+<div class="card">
+<h2>Add Team</h2>
+
+<form method="POST">
+<input name="team" placeholder="Team name">
+<button>Add</button>
+</form>
+</div>
+
+<!-- TEAM TABLE -->
+<div class="card">
+<h2>Manage Teams</h2>
+
+<table>
+<tr>
+<th>Team</th>
+<th>M</th>
+<th>W</th>
+<th>L</th>
+<th>D</th>
+<th>RD</th> <!-- ✅ NEW -->
+<th>P</th>
+<th>Actions</th>
+</tr>
+
+{% for team, d in teams.items() %}
+<tr style="animation-delay: {{ loop.index * 0.12 }}s;">
+<td>{{ team }}</td>
+<td>{{ d.M }}</td>
+<td>{{ d.W }}</td>
+<td>{{ d.L }}</td>
+<td>{{ d.D }}</td>
+<td>{{ d.RD }}</td> <!-- ✅ NEW -->
+<td>{{ d.P }}</td>
+
+<td class="actions">
+<a href="/edit/{{team}}"><button>Edit</button></a>
+<a href="/delete/{{team}}"><button class="delete">Delete</button></a>
+</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>
