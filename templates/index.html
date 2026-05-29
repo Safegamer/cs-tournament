@@ -1,54 +1,254 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CS Tournament</title>
+<title>Leaderboard</title>
 
 <style>
 body {
-    background: #0f172a;
-    color: white;
-    font-family: Arial;
-    text-align: center;
+    margin:0;
+    font-family:'Segoe UI';
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    color:white;
+    display:flex;
 }
 
-h1 { color: #22c55e; }
+/* SIDEBAR */
+.sidebar {
+    width:250px;
+    height:100vh;
+    background:#020617;
+    padding:30px 20px;
+}
 
+.sidebar a {
+    display:block;
+    padding:14px;
+    margin:12px 0;
+    border-radius:12px;
+    text-decoration:none;
+    color:#cbd5f5;
+    transition:0.3s;
+}
+
+.sidebar a:hover {
+    transform: translateX(8px);
+    background: rgba(59,130,246,0.25);
+}
+
+.active {
+    background: rgba(59,130,246,0.3);
+    box-shadow: 0 0 15px rgba(59,130,246,0.4);
+}
+
+/* MAIN */
+.main {
+    flex:1;
+    padding:40px;
+}
+
+/* CARD */
 .card {
-    background: #1e293b;
-    padding: 20px;
-    margin: 20px auto;
-    width: 60%;
-    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    padding:30px;
+    border-radius:18px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition:0.3s;
 }
 
-table { width: 100%; }
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(59,130,246,0.25);
+}
 
-th, td { padding: 10px; }
+/* TITLE */
+h1 {
+    transition:0.3s;
+}
 
-.gold { color: gold; font-weight: bold; }
+h1:hover {
+    color:#60a5fa;
+    text-shadow: 0 0 10px rgba(96,165,250,0.6);
+}
+
+/* TABLE */
+table {
+    width:100%;
+    border-spacing:0 14px;
+}
+
+th {
+    text-align:left;
+    color:#94a3b8;
+    padding:10px;
+}
+
+tr {
+    background: rgba(255,255,255,0.03);
+    opacity:0;
+    transform: translateY(60px);
+    animation: rowEnter 0.8s ease forwards;
+    transition:0.25s;
+}
+
+td {
+    padding:16px;
+}
+
+tr:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(59,130,246,0.15);
+    box-shadow: 0 10px 25px rgba(59,130,246,0.25);
+}
+
+/* TOP 3 */
+.top1 {
+    border-left: 4px solid gold;
+    background: linear-gradient(90deg, rgba(255,215,0,0.12), transparent);
+}
+
+.top2 {
+    border-left: 4px solid silver;
+    background: linear-gradient(90deg, rgba(192,192,192,0.12), transparent);
+}
+
+.top3 {
+    border-left: 4px solid #cd7f32;
+    background: linear-gradient(90deg, rgba(205,127,50,0.12), transparent);
+}
+
+/* ANIMATION */
+@keyframes rowEnter {
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* 🔥 SOCIAL ICONS (GLASS + FLOAT — FIXED CLEAN) */
+.socials {
+    position: fixed;
+    bottom:20px;
+    right:20px;
+    display:flex;
+    gap:16px;
+}
+
+.socials a {
+    position:relative;
+    width:52px;
+    height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    transition:0.3s;
+
+    /* smooth floating */
+    animation: float 4s ease-in-out infinite;
+}
+
+.socials img {
+    width:26px;
+    height:26px;
+}
+
+/* FLOAT (does NOT break hover anymore) */
+@keyframes float {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+/* HOVER OVERRIDE (important fix) */
+.socials a:hover {
+    animation: none;
+    transform: translateY(-8px) scale(1.12);
+}
+
+/* GLOW */
+.discord:hover {
+    box-shadow: 0 0 25px rgba(88,101,242,0.7);
+}
+
+.youtube:hover {
+    box-shadow: 0 0 25px rgba(255,0,0,0.7);
+}
+
+/* TOOLTIP */
+.socials a::after {
+    content: attr(data-name);
+    position:absolute;
+    bottom:65px;
+    background:#020617;
+    padding:6px 12px;
+    border-radius:8px;
+    font-size:12px;
+    opacity:0;
+    transform: translateY(10px);
+    transition:0.3s;
+    white-space:nowrap;
+}
+
+.socials a:hover::after {
+    opacity:1;
+    transform: translateY(0);
+}
 </style>
 </head>
 
 <body>
 
-<h1>🏆 CS Tournament Dashboard</h1>
+<div class="sidebar">
+    <a href="/" class="active">🏆 Leaderboard</a>
+    <a href="/admin">⚙ Admin Panel</a>
+</div>
 
+<div class="main">
 <div class="card">
-<h2>Leaderboard</h2>
+
+<h1>Leaderboard</h1>
 
 <table>
-<tr><th>Rank</th><th>Team</th><th>Pts</th><th>Wins</th></tr>
+<tr>
+<th>Rank</th>
+<th>Team</th>
+<th>Points</th>
+</tr>
 
 {% for team, d in teams %}
-<tr class="{% if loop.index == 1 %}gold{% endif %}">
-<td>{{ loop.index }}</td>
+<tr class="
+{% if loop.index == 1 %}top1{% endif %}
+{% if loop.index == 2 %}top2{% endif %}
+{% if loop.index == 3 %}top3{% endif %}
+" style="animation-delay: {{ loop.index * 0.2 }}s;">
+
+<td>{{ loop.index }} {% if loop.index == 1 %}👑{% endif %}</td>
 <td>{{ team }}</td>
 <td>{{ d.P }}</td>
-<td>{{ d.W }}</td>
+
 </tr>
 {% endfor %}
 
 </table>
+
+</div>
+</div>
+
+<!-- 🔥 SOCIAL ICONS -->
+<div class="socials">
+
+<a href="https://discord.gg/FG2UEmq64f" target="_blank" class="discord" data-name="Join Discord">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
+</a>
+
+<a href="https://www.youtube.com/@srpriyanshuyt" target="_blank" class="youtube" data-name="YouTube Channel">
+<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+</a>
+
 </div>
 
 </body>
